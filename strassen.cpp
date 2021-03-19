@@ -11,6 +11,7 @@ int main (int argc, char *argv[]) {
 
     int A[dim][dim];
     int B[dim][dim];
+    int C[dim][dim];
 
     int count = 0;
     std::ifstream file("input.txt");
@@ -48,12 +49,31 @@ int main (int argc, char *argv[]) {
         cout << endl;
     }
 
+    // Multiply 2 matrices regularly
+    int i, j, k;
+        for (i = 0; i < dim; i++) {
+            for (j = 0; j < dim; j++) {
+                C[i][j]=0;
+                for (k = 0; k < dim; k++)
+                    C[i][j] += A[i][k] * B[k][j];
+            }
+        }
+
+    // Output regular product
+    cout << endl << "Output Matrix: " << endl;
+    for(i = 0; i < dim; ++i)
+        for(j = 0; j < dim; ++j)
+        {
+            cout << " " << C[i][j];
+            if(j == dim-1)
+                cout << endl;
+        }
+
     return 0;
 }
 
-// function to multiply 2 matrices
 
-// function to add 2 matrices
+
 
 // function to subtract 2 matrices
 
