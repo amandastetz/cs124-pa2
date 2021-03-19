@@ -23,14 +23,27 @@ int main (int argc, char *argv[]) {
             A[count / dim][count % dim] = stoi(str);
         }
 
+        else {
+            B[(count - dim * dim) / dim][(count - dim * dim) % dim] = stoi(str);
+        }
+
         count += 1;
 
          // std::cout << std::stoi(str) << "\n";
     }
 
+    cout << "Printing Matrix A" << endl;
     for (int i = 0; i < dim; i++) {
         for (int j = 0; j < dim; j++) {
             cout << A[i][j] << " ";
+        }
+        cout << endl;
+    }
+
+    cout << "Printing Matrix B" << endl;
+    for (int i = 0; i < dim; i++) {
+        for (int j = 0; j < dim; j++) {
+            cout << B[i][j] << " ";
         }
         cout << endl;
     }
