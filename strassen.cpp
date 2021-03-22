@@ -73,8 +73,6 @@ int main (int argc, char *argv[]) {
 }
 
 
-
-
 // function to subtract 2 matrices
 
 // function to split matrices
