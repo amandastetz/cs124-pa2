@@ -278,7 +278,7 @@ int main (int argc, char *argv[])
     // ---------------------
 
     // Vector for content of the matrices
-    int dim_m = 500;
+    int dim_m = 1024;
 	vector<int> content_m (dim_m);
     vector< vector<int> > M (dim_m, content_m),
                           result_m (dim_m, content_m),
