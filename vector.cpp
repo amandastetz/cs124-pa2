@@ -8,6 +8,8 @@
 using namespace std;
 int crossover_pt = 2; 
 int dim; 
+int dim_m;
+int dag;
 
 // Print matrix
 void print (vector< vector<int> > C, int dim) {
@@ -27,6 +29,15 @@ void print_d (vector< vector<int> > C, int dim) {
 		cout << C[i][i] << "\n";
 	}
     cout << "\n" << endl;
+}
+
+// Diagonal sum
+void sum_d (vector< vector<int> > C, int dag, int dim) {
+	for (int i = 0; i < dim; i++) {
+		dag += C[i][i];
+	}
+    dag = dag / 6;
+    cout << dag << endl;
 }
 
 // Multiply 2 matrices regularly
@@ -248,19 +259,47 @@ int main (int argc, char *argv[])
 		}
 	}
 
-    print (A, dim);
-    print (B, dim);
-    multiply (A,B,C,dim);
-    print (C, dim);
+    // print (A, dim);
+    // print (B, dim);
+    // multiply (A,B,C,dim);
+    // print (C, dim);
 
     // Run Strassen's Algorithm
-    strassen (A,B,C,dim);
+    // strassen (A,B,C,dim);
 
     // Print the resulting matrix
-    print (C, dim);
+    // print (C, dim);
 
     // Print the diagonal of the resulting matrix
-    print_d (C, dim);
+    // print_d (C, dim);
+
+    // ---------------------
+    // -- Matrix Section ---
+    // ---------------------
+
+    // Vector for content of the matrices
+    int dim_m = 14;
+	vector<int> content_m (dim_m);
+    vector< vector<int> > M (dim_m, content_m),
+                          result_m (dim_m, content_m),
+                          final_m (dim_m, content_m);
+
+    // Construct the adjacency matrix
+	for (int i = 0, j = 0; i < dim_m*dim_m; i++) {
+        int n = rand() % 2; // We change the probability of this
+		M[i/dim_m][i%dim_m] = n;
+	}
+
+    // print (M, dim_m);
+
+    // Compute M^3
+    strassen (M, M, result_m, dim_m);
+    strassen (M, result_m, final_m, dim_m);
+
+    // print_d (final_m, dim_m);
+
+    // Sum up diagonal entries and divide by 6
+    sum_d (final_m, dag, dim_m);
 
    	return 0;
 }
