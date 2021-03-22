@@ -36,7 +36,7 @@ void sum_d (vector< vector<int> > C, int dag, int dim) {
 	for (int i = 0; i < dim; i++) {
 		dag += C[i][i];
 	}
-    dag = dag / 6;
+    // dag = dag / 6;
     cout << dag << endl;
 }
 
@@ -278,16 +278,31 @@ int main (int argc, char *argv[])
     // ---------------------
 
     // Vector for content of the matrices
-    int dim_m = 14;
+    int dim_m = 500;
 	vector<int> content_m (dim_m);
     vector< vector<int> > M (dim_m, content_m),
                           result_m (dim_m, content_m),
                           final_m (dim_m, content_m);
 
+
     // Construct the adjacency matrix
-	for (int i = 0, j = 0; i < dim_m*dim_m; i++) {
-        int n = rand() % 2; // We change the probability of this
-		M[i/dim_m][i%dim_m] = n;
+	for (int i = 0; i < dim_m*dim_m; i++) {
+        if (i/dim_m == i%dim_m) {
+            M[i/dim_m][i%dim_m] = 0;
+        }
+        else {
+            double val = (double)rand() / RAND_MAX;
+            int n;
+            if (val < 0.05){
+                n = 1;
+            } 
+            else {
+                n = 0;
+            } 
+            // int n = rand() % 2;
+            M[i/dim_m][i%dim_m] = n;
+            M[i%dim_m][i/dim_m] = n;
+        }
 	}
 
     // print (M, dim_m);
