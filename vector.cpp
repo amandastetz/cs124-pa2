@@ -36,7 +36,7 @@ void sum_d (vector< vector<int> > C, int dag, int dim) {
 	for (int i = 0; i < dim; i++) {
 		dag += C[i][i];
 	}
-    // dag = dag / 6;
+    dag = dag / 6;
     cout << dag << endl;
 }
 
@@ -293,7 +293,7 @@ int main (int argc, char *argv[])
         else {
             double val = (double)rand() / RAND_MAX;
             int n;
-            if (val < 0.05){
+            if (val < 0.01){
                 n = 1;
             } 
             else {
