@@ -26,6 +26,7 @@ void print_d (vector< vector<int> > C, int dim) {
 	for (int i = 0; i < dim; i++) {
 		cout << C[i][i] << "\n";
 	}
+    cout << "\n" << endl;
 }
 
 // Multiply 2 matrices regularly
