@@ -7,7 +7,7 @@
 
 using namespace std;
 int dim; 
-int crossover_pt = 1; 
+int crossover_pt = -1; 
 
 // Print matrix
 void print (vector< vector<int> > C, int dim) {
@@ -46,6 +46,7 @@ void sum (vector< vector<int> > &A, vector< vector<int> > &B,
           vector< vector<int> > &C, int dim) {
     for (int i = 0; i < dim; i++) {
         for (int j = 0; j < dim; j++) {
+            C[i][j] = 0;
             C[i][j] += A[i][j] + B[i][j];
         }
     }
@@ -56,6 +57,7 @@ void subtract (vector< vector<int> > &A, vector< vector<int> > &B,
                vector< vector<int> > &C, int dim) {
     for (int i = 0; i < dim; i++) {
         for (int j = 0; j < dim; j++) {
+            C[i][j] = 0;
             C[i][j] += A[i][j] - B[i][j];
         }
     }
@@ -68,15 +70,13 @@ void strassen (vector< vector<int> > &A, vector< vector<int> > &B,
     // Check if dim is odd, if so pad with zeros
     // idk how to do this
 
-    if (dim <= crossover_pt) {
-		multiply (A, B, C, dim);
-		return;
-	}
-	else {
+    // if (dim <= crossover_pt) {
+	// 	multiply (A, B, C, dim);
+	// 	return;
+	// }
+	// else {
 
         cout << "Entered Strassen's" << endl;
-        // print (A, dim);
-        // print (B, dim);
 
         // Resize dim for submatrices
         int sub_dim = dim/2;
@@ -104,6 +104,7 @@ void strassen (vector< vector<int> > &A, vector< vector<int> > &B,
                             P7 (sub_dim, content),
                             temp1 (sub_dim, content),
                             temp2 (sub_dim, content);
+        
 
         // Split submatrices
         for (int i = 0; i < sub_dim; i++) {
@@ -122,6 +123,16 @@ void strassen (vector< vector<int> > &A, vector< vector<int> > &B,
             }
         }
 
+        print (A11, sub_dim);
+        print (A12, sub_dim);
+        print (A21, sub_dim);
+        print (A22, sub_dim);
+
+        print (B11, sub_dim);
+        print (B12, sub_dim);
+        print (B21, sub_dim);
+        print (B22, sub_dim);
+
         // Calculate all P values
         // -----------------------------
         //      P1 = A11 (B12 - B22)
@@ -135,71 +146,71 @@ void strassen (vector< vector<int> > &A, vector< vector<int> > &B,
 
         // P1
         subtract (B12, B22, temp1, sub_dim);
-        print (temp1, sub_dim);
-        strassen (A11, temp1, P1, sub_dim);
+        // strassen (A11, temp1, P1, sub_dim);
+        
 
-        // P2
-        sum (A11, A12, temp1, sub_dim);
-        strassen (temp1, B22, P2, sub_dim);
+        // // P2
+        // sum (A11, A12, temp1, sub_dim);
+        // strassen (temp1, B22, P2, sub_dim);
 
-        // P3
-        sum (A21, A22, temp1, sub_dim);
-        strassen (temp1, B11, P3, sub_dim);
+        // // P3
+        // sum (A21, A22, temp1, sub_dim);
+        // strassen (temp1, B11, P3, sub_dim);
 
-        // P4
-        subtract (B21, B11, temp1, sub_dim);
-        strassen (A22, temp1, P4, sub_dim);
+        // // P4
+        // subtract (B21, B11, temp1, sub_dim);
+        // strassen (A22, temp1, P4, sub_dim);
 
-        // P5
-        sum (A11, A22, temp1, sub_dim);
-        sum (B11, B22, temp2, sub_dim);
-        strassen (temp1, temp2, P5, sub_dim);
+        // // P5
+        // sum (A11, A22, temp1, sub_dim);
+        // sum (B11, B22, temp2, sub_dim);
+        // strassen (temp1, temp2, P5, sub_dim);
 
-        // P6
-        subtract (A12, A22, temp1, sub_dim);
-        sum (B21, B22, temp2, sub_dim);
-        strassen (temp1, temp2, P6, sub_dim);
+        // // P6
+        // subtract (A12, A22, temp1, sub_dim);
+        // sum (B21, B22, temp2, sub_dim);
+        // strassen (temp1, temp2, P6, sub_dim);
 
-        // P7
-        subtract (A11, A21, temp1, sub_dim);
-        sum (B11, B12, temp2, sub_dim);
-        strassen (temp1, temp2, P7, sub_dim);
+        // // P7
+        // subtract (A11, A21, temp1, sub_dim);
+        // sum (B11, B12, temp2, sub_dim);
+        // strassen (temp1, temp2, P7, sub_dim);
 
-        // Calculate all C values
-        // -----------------------------
-        //      C11 = P5 + P4 - P2 + P6
-        //      C12 = P1 + P2
-        //      C21 = P3 + P4
-        //      C22 = P5 + P1 - P3 - P7
-        // -----------------------------
+        // // Calculate all C values
+        // // -----------------------------
+        // //      C11 = P5 + P4 - P2 + P6
+        // //      C12 = P1 + P2
+        // //      C21 = P3 + P4
+        // //      C22 = P5 + P1 - P3 - P7
+        // // -----------------------------
 
-        // C11
-        sum (P5, P4, temp1, sub_dim);
-        subtract (temp1, P2, temp2, sub_dim);
-        sum (temp2, P6, C11, sub_dim);
+        // // C11
+        // sum (P5, P4, temp1, sub_dim);
+        // subtract (temp1, P2, temp2, sub_dim);
+        // sum (temp2, P6, C11, sub_dim);
 
-        // C12
-        sum (P1, P2, C12, sub_dim);
+        // // C12
+        // sum (P1, P2, C12, sub_dim);
 
-        // C21
-        sum (P3, P4, C21, sub_dim);
+        // // C21
+        // sum (P3, P4, C21, sub_dim);
 
-        // C22
-        sum (P5, P1, temp1, sub_dim);
-        subtract (temp1, P3, temp2, sub_dim);
-        subtract (temp2, P7, C22, sub_dim);
+        // // C22
+        // sum (P5, P1, temp1, sub_dim);
+        // subtract (temp1, P3, temp2, sub_dim);
+        // subtract (temp2, P7, C22, sub_dim);
 
-        // Insert all computed values into the final matrix
-        for (int i = 0; i < sub_dim ; i++) {
-            for (int j = 0 ; j < sub_dim ; j++) {
-                C[i][j] = C11[i][j];
-                C[i][j+sub_dim] = C12[i][j];
-                C[i+sub_dim][j] = C21[i][j];
-                C[i+sub_dim][j+sub_dim] = C22[i][j];
-            }
-        }
-        return;
-    }  
+        // // Insert all computed values into the final matrix
+        // for (int i = 0; i < sub_dim ; i++) {
+        //     for (int j = 0 ; j < sub_dim ; j++) {
+        //         C[i][j] = C11[i][j];
+        //         C[i][j+sub_dim] = C12[i][j];
+        //         C[i+sub_dim][j] = C21[i][j];
+        //         C[i+sub_dim][j+sub_dim] = C22[i][j];
+        //     }
+        // }
+        // return;
+    // }  
 }
 
 
@@ -240,17 +251,17 @@ int main (int argc, char *argv[])
 
     print (A, dim);
     print (B, dim);
-    multiply (A,B,C,dim);
+    sum (A,B,C,dim);
     print (C, dim);
 
     // Run Strassen's Algorithm
     strassen (A,B,C,dim);
 
     // Print the resulting matrix
-    print (C, dim);
+    // print (C, dim);
 
     // Print the diagonal of the resulting matrix
-    print_d (C, dim);
+    // print_d (C, dim);
 
    	return 0;
 }
