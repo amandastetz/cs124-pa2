@@ -261,24 +261,24 @@ int main (int argc, char *argv[])
 
     // print (A, dim);
     // print (B, dim);
-    // multiply (A,B,C,dim);
-    // print (C, dim);
+    multiply (A,B,C,dim);
+    print (C, dim);
 
     // Run Strassen's Algorithm
-    // strassen (A,B,C,dim);
+    strassen (A,B,C,dim);
 
     // Print the resulting matrix
     // print (C, dim);
 
     // Print the diagonal of the resulting matrix
-    // print_d (C, dim);
+    print_d (C, dim);
 
     // ---------------------
     // -- Matrix Section ---
     // ---------------------
 
     // Vector for content of the matrices
-    int dim_m = 1024;
+    int dim_m = 100;
 	vector<int> content_m (dim_m);
     vector< vector<int> > M (dim_m, content_m),
                           result_m (dim_m, content_m),
@@ -308,13 +308,13 @@ int main (int argc, char *argv[])
     // print (M, dim_m);
 
     // Compute M^3
-    strassen (M, M, result_m, dim_m);
-    strassen (M, result_m, final_m, dim_m);
+    // strassen (M, M, result_m, dim_m);
+    // strassen (M, result_m, final_m, dim_m);
 
     // print_d (final_m, dim_m);
 
     // Sum up diagonal entries and divide by 6
-    sum_d (final_m, dag, dim_m);
+    // sum_d (final_m, dag, dim_m);
 
    	return 0;
 }
