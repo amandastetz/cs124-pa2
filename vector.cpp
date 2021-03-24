@@ -5,8 +5,11 @@
 #include <iostream>
 #include <string>
 
+// For timing purposes
+#include <chrono>
+
 using namespace std;
-int crossover_pt = 2; 
+int crossover_pt = 55; // solely using strassen
 int dim; 
 int dim_m;
 int dag;
@@ -264,14 +267,37 @@ int main (int argc, char *argv[])
     multiply (A,B,C,dim);
     print (C, dim);
 
+
+    // For timing purposes
+    using std::chrono::high_resolution_clock;
+    using std::chrono::duration_cast;
+    using std::chrono::duration;
+    using std::chrono::milliseconds;
+
+    // Time function begins
+    auto t1 = high_resolution_clock::now();
+
     // Run Strassen's Algorithm
     strassen (A,B,C,dim);
+
+    // Time function ends
+    auto t2 = high_resolution_clock::now();
+
+    /* Getting number of milliseconds as an integer. */
+    auto ms_int = duration_cast<milliseconds>(t2 - t1);
+
+    /* Getting number of milliseconds as a double. */
+    duration<double, std::milli> ms_double = t2 - t1;
+
+    // Print time in ms 
+    std::cout << "ms in int: " << ms_int.count() << "ms\n" << endl;
+    std::cout << "ms in dbl: " << ms_double.count() << "ms" << endl;
 
     // Print the resulting matrix
     // print (C, dim);
 
     // Print the diagonal of the resulting matrix
-    print_d (C, dim);
+    // print_d (C, dim);
 
     // ---------------------
     // -- Matrix Section ---
